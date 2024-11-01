@@ -88,11 +88,24 @@ composer.addPass(rgbShiftPass);
 // const controls = new OrbitControls(camera, renderer.domElement);
 // controls.enableDamping = true;
 
-// Window resize handler for camera, renderer, and composer -
+// Update camera position based on screen size
+function updateCameraPosition() {
+  if (window.innerWidth <= 768) {
+    camera.position.z = 7; // Move camera further back on mobile
+  } else {
+    camera.position.z = 3.5; // Original position for desktop
+  }
+}
+
+// Call initially
+updateCameraPosition();
+
+// Update the resize event listener
 window.addEventListener('resize', () => {
   // Update camera
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
+  updateCameraPosition();
 
   // Update renderer
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -107,6 +120,21 @@ window.addEventListener("mousemove", (e) => {
   if (model) {
     const rotationY = (e.clientX / window.innerWidth - 0.5) * (Math.PI * .17);
     const rotationX = (e.clientY / window.innerHeight - 0.5) * (Math.PI * .17);
+    gsap.to(model.rotation, {
+      y: rotationY,
+      x: rotationX,
+      duration: 0.9,
+      ease: "power3.out"
+    });
+  }
+});
+
+// Update mouse movement for mobile touch events
+window.addEventListener("touchmove", (e) => {
+  if (model && e.touches[0]) {
+    const touch = e.touches[0];
+    const rotationY = (touch.clientX / window.innerWidth - 0.5) * (Math.PI * .17);
+    const rotationX = (touch.clientY / window.innerHeight - 0.5) * (Math.PI * .17);
     gsap.to(model.rotation, {
       y: rotationY,
       x: rotationX,
