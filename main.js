@@ -8,6 +8,7 @@ import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import gsap from "gsap";
 import Lenis from '@studio-freight/lenis'
+import { initCursor } from './cursor.js';
 
 // Initialize Lenis
 const lenis = new Lenis()
@@ -152,3 +153,8 @@ function animate(time) {
 }
 
 animate();
+
+// Move initCursor() inside DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    initCursor();
+});

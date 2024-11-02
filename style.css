@@ -1,4 +1,3 @@
-
 ::-webkit-scrollbar {
   display: none;
 }
@@ -7,15 +6,25 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: none;
 }
 
 html,
 body {
   width: 100%;
   height: 100%;
-  
+
 }
 
 .main {
   background-color: #000;
+}
+
+.cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
 }
